@@ -82,7 +82,7 @@ export circuit verifyReport(reportId: Bytes<32>): Boolean {
 ### Deployed Smart Contract
 
 ```
-Contract Address: XXX
+Contract Address: d25450474762eec5f5cd73df503835041bc8fd3134dc360fccda75a501c37055
 Network: Midnight Undeployed (Local Devnet)
 ```
 

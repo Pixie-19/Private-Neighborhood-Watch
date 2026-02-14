@@ -73,7 +73,7 @@ const logger = pino(
 // ---------------------------------------------------------------------------
 // Types
 // ---------------------------------------------------------------------------
-type NeighbourPrivateState = {};
+type NeighbourPrivateState = undefined;
 type NeighbourCircuits = ImpureCircuitId<Contract<NeighbourPrivateState>>;
 const NeighbourPrivateStateId = 'neighbourPrivateState' as const;
 
@@ -273,10 +273,13 @@ async function main() {
   rl.close();
 
   let seed: string;
-  if (seedInput.trim()) {
+  if (seedInput.trim() && /^[0-9a-fA-F]{32,}$/.test(seedInput.trim())) {
     seed = seedInput.trim();
     console.log(`  Using provided seed: ${seed.slice(0, 8)}...`);
   } else {
+    if (seedInput.trim()) {
+      console.log('  ⚠ Invalid hex seed, generating a new one instead...');
+    }
     seed = toHex(Buffer.from(generateRandomSeed()));
     console.log(`  Generated new seed: ${seed}`);
     console.log('  ⚠ Save this seed to restore your wallet later!\n');
@@ -370,7 +373,7 @@ async function main() {
     return deployContract(providers, {
       compiledContract: neighbourCompiledContract,
       privateStateId: NeighbourPrivateStateId,
-      initialPrivateState: {},
+      initialPrivateState: undefined,
     });
   });
 

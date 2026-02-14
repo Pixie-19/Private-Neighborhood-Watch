@@ -1,0 +1,8 @@
+{
+  "version": 3,
+  "file": "index.js",
+  "sourceRoot": "../../../../",
+  "sources": ["src/neighbour.compact"],
+  "names": [],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;EAKA;;;;;;;;;;MAqBA,AAAA,YAeC;;;;;cAdC,UAAmB;;;;;;;;;;;;;;;;;;yCAAnB,UAAmB;;;;;;;;;8CAAnB,UAAmB;;;OAcpB;MAUD,AAAA,YASC;;;;;cARC,UAAmB;;;;;;;;;;;;;;;;;;yCAAnB,UAAmB;;;;;;;;;8CAAnB,UAAmB;;;OAQpB;;;;;;GACA;EAxDD;;;;;;;;;;;;;;;;;;;;;;;;;;;;IASA;;;;;;;;;yEAAoC;IAGpC;;;;;;;;;;yEAAwC;;;;;;;GA4CvC;EAnCD,AAAA,eAeC,4BAdC,UAAmB;UAIb,oBAAuC,GAAT,UAAQ;qDAGpC;;;;;;;;;;;4KAAiB,oBAAkB;;;;0HAA1B;;IAGjB;;;;;;;;;;2HAAiB,oBAAkB;;;;;wEAA1B;UAGT,KAAY;IAAZ;;;;;;;;;;6FAAA,KAAY;;;;wEAAA;;GACb;EAUD,AAAA,eASC,4BARC,UAAmB;UAIb,oBAAuC,GAAT,UAAQ;mCAGrC;;;;;;;;;;;0JAAiB,oBAAkB;;;;wGAA1B;GACjB;;;;;;;;;;;;;;;;IA9CD;qCAAA;;;;;;;;;;;0GAAoC;KAAA;IAGpC;;;;;uCAAA;;;;;;;;;;;;;;;;4GAAwC;;;;;;uCAAxC;;;;;;;;;;;;4GAAwC;;;;;;;;;;;;;;uCAAxC;;;;;;;;;;;;;;;4GAAwC;;;;;;;;;KAAA;;;;;;;;;;"
+}

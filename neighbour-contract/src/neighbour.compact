@@ -28,11 +28,14 @@ export circuit submitReport(
   reportId: Bytes<32>
 ): [] {
 
+  // Disclose reportId for ledger operations
+  const disclosed_reportId = disclose(reportId);
+
   // Ensure this report hasn't been submitted before
-  assert(!reportIds.member(reportId), "report already submitted");
+  assert(!reportIds.member(disclosed_reportId), "report already submitted");
 
   // Record the report ID on-chain
-  reportIds.insert(reportId);
+  reportIds.insert(disclosed_reportId);
 
   // Increment total reports counter
   totalReports.increment(1);
@@ -50,6 +53,9 @@ export circuit verifyReport(
   reportId: Bytes<32>
 ): Boolean {
 
+  // Disclose reportId for ledger lookup
+  const disclosed_reportId = disclose(reportId);
+
   // Verify this report exists on-chain
-  return reportIds.member(reportId);
+  return reportIds.member(disclosed_reportId);
 }
