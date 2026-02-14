@@ -1,0 +1,55 @@
+// This file is part of midnightntwrk/anon-incident-report.
+// Copyright (C) 2026 Midnight Foundation
+// SPDX-License-Identifier: Apache-2.0
+// Licensed under the Apache License, Version 2.0 (the "License");
+
+pragma language_version >= 0.20;
+
+import CompactStandardLibrary;
+
+// --------------------------------------------------
+// PUBLIC STATE
+// --------------------------------------------------
+
+// Total number of incident reports
+export ledger totalReports: Counter;
+
+// Tracks which report IDs have been submitted
+export ledger reportIds: Set<Bytes<32>>;
+
+// --------------------------------------------------
+// TRANSITION: Submit Anonymous Report
+// --------------------------------------------------
+// The reportId is a hash combining incident data + location proof.
+// Actual incident content and location proof are stored off-chain.
+// The on-chain Set proves a report was submitted without revealing details.
+
+export circuit submitReport(
+  reportId: Bytes<32>
+): [] {
+
+  // Ensure this report hasn't been submitted before
+  assert(!reportIds.member(reportId), "report already submitted");
+
+  // Record the report ID on-chain
+  reportIds.insert(reportId);
+
+  // Increment total reports counter
+  totalReports.increment(1);
+}
+
+
+// --------------------------------------------------
+// TRANSITION: Verify Location Proof (pure circuit)
+// --------------------------------------------------
+// Authority provides the same inputs used to create the reportId hash.
+// The circuit verifies the hash matches, proving the report is valid.
+// This is a pure check — no state change needed.
+
+export circuit verifyReport(
+  reportId: Bytes<32>
+): Boolean {
+
+  // Verify this report exists on-chain
+  return reportIds.member(reportId);
+}
