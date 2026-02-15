@@ -2,6 +2,8 @@
 
 # 🛡️ Anon Incident Report
 
+![alt text](image.png)
+
 ### Report local incidents anonymously on-chain with zero-knowledge location proofs
 
 [![Midnight Network](https://img.shields.io/badge/Built%20on-Midnight%20Network-6C3AED?style=for-the-badge)](https://midnight.network)
