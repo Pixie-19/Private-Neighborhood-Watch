@@ -18,11 +18,11 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
             Home
           </Link>
           <Link
-            to="/counter"
+            to="/incident-report"
             className="font-semibold transition hover:opacity-80"
             activeProps={{ className: 'underline' }}
           >
-            Counter
+            Incident Report
           </Link>
           <Link
             to="/wallet-ui"

@@ -1,34 +1,35 @@
 import {
-  type CounterProviders,
-  CounterPrivateStateId,
-} from "../api/common-types";
-import { type ContractAddress } from "@midnight-ntwrk/compact-runtime";
-import { BehaviorSubject } from "rxjs";
-import { type Logger } from "pino";
-import { type LocalStorageProps } from "./counter-localStorage-class";
+  type NeighbourProviders,
+  NeighbourPrivateStateId,
+  NeighbourPrivateState,
+} from '../api/common-types';
+import { type ContractAddress } from '@midnight-ntwrk/compact-runtime';
+import { BehaviorSubject } from 'rxjs';
+import { type Logger } from 'pino';
+import { type LocalStorageProps } from './neighbour-localStorage-class';
 import {
   ContractController,
   ContractControllerInterface,
-} from "../api/contractController";
+} from '../api/contractController';
 
-export type ContractDeployment =  
+export type ContractDeployment =
   | InProgressContractDeployment
   | DeployedContract
   | FailedContractDeployment;
 
 export interface InProgressContractDeployment {
-  readonly status: "in-progress";
+  readonly status: 'in-progress';
   readonly address?: ContractAddress;
 }
 
 export interface DeployedContract {
-  readonly status: "deployed";
+  readonly status: 'deployed';
   readonly api: ContractControllerInterface;
   readonly address: ContractAddress;
 }
 
 export interface FailedContractDeployment {
-  readonly status: "failed";
+  readonly status: 'failed';
   readonly error: Error;
   readonly address?: ContractAddress;
 }
@@ -38,7 +39,7 @@ export interface ContractFollow {
   address?: ContractAddress;
 }
 
-export interface DeployedAPIProvider {  
+export interface DeployedAPIProvider {
   readonly joinContract: () => ContractFollow;
   readonly deployContract: () => Promise<ContractFollow>;
 }
@@ -46,14 +47,14 @@ export interface DeployedAPIProvider {
 export class DeployedTemplateManager implements DeployedAPIProvider {
   constructor(
     private readonly logger: Logger,
-    private readonly localState: LocalStorageProps,    
+    private readonly localState: LocalStorageProps,
     private readonly contractAddress: ContractAddress,
-    private readonly providers?: CounterProviders
+    private readonly providers?: NeighbourProviders,
   ) {}
 
   joinContract(): ContractFollow {
     const deployment = new BehaviorSubject<ContractDeployment>({
-      status: "in-progress",
+      status: 'in-progress',
       address: this.contractAddress,
     });
     const contractFollow = {
@@ -68,7 +69,7 @@ export class DeployedTemplateManager implements DeployedAPIProvider {
 
   async deployContract(): Promise<ContractFollow> {
     const deployment = new BehaviorSubject<ContractDeployment>({
-      status: "in-progress",
+      status: 'in-progress',
     });
 
     const address = await this.deploy(deployment);
@@ -77,34 +78,33 @@ export class DeployedTemplateManager implements DeployedAPIProvider {
   }
 
   private async deploy(
-    deployment: BehaviorSubject<ContractDeployment>
+    deployment: BehaviorSubject<ContractDeployment>,
   ): Promise<string | undefined> {
     try {
       if (this.providers) {
         const api = await ContractController.deploy(
-          CounterPrivateStateId,
+          NeighbourPrivateStateId,
           this.providers,
-          this.logger
+          this.logger,
         );
-        // this.localState.setContractPrivateId(CounterPrivateStateId, api.deployedContractAddress);
         this.localState.addContract(api.deployedContractAddress);
 
         deployment.next({
-          status: "deployed",
+          status: 'deployed',
           api,
           address: api.deployedContractAddress,
         });
         return api.deployedContractAddress;
       } else {
         deployment.next({
-          status: "failed",
-          error: new Error("Providers are not available"),
+          status: 'failed',
+          error: new Error('Providers are not available'),
         });
       }
     } catch (error: unknown) {
       this.logger.error(error);
       deployment.next({
-        status: "failed",
+        status: 'failed',
         error: error instanceof Error ? error : new Error(String(error)),
       });
     }
@@ -113,38 +113,32 @@ export class DeployedTemplateManager implements DeployedAPIProvider {
 
   private async join(
     deployment: BehaviorSubject<ContractDeployment>,
-    contractAddress: ContractAddress
+    contractAddress: ContractAddress,
   ): Promise<void> {
     try {
       if (this.providers) {
-        // const item = this.localState.getContractPrivateId(contractAddress);
-
-        // if (item != null) {
-        // } else {
-        //   this.localState.setContractPrivateId(CounterPrivateStateId, contractAddress);
-        // }
         const api = await ContractController.join(
-          CounterPrivateStateId,
+          NeighbourPrivateStateId,
           this.providers,
           contractAddress,
-          this.logger
+          this.logger,
         );
 
         deployment.next({
-          status: "deployed",
+          status: 'deployed',
           api,
           address: api.deployedContractAddress,
         });
       } else {
         deployment.next({
-          status: "failed",
-          error: new Error("Providers are not available"),
+          status: 'failed',
+          error: new Error('Providers are not available'),
         });
       }
     } catch (error: unknown) {
       this.logger.error(error);
       deployment.next({
-        status: "failed",
+        status: 'failed',
         error: error instanceof Error ? error : new Error(String(error)),
       });
     }

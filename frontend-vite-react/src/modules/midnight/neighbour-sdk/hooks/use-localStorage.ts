@@ -1,6 +1,6 @@
 import { useContext } from 'react';
-import { LocalStorageContext } from '../contexts/counter-localStorage';
-import { LocalStorageProps } from '../contexts/counter-localStorage-class';
+import { LocalStorageContext } from '../contexts/neighbour-localStorage';
+import { LocalStorageProps } from '../contexts/neighbour-localStorage-class';
 
 export const useLocalState = (): LocalStorageProps => {
   const context = useContext(LocalStorageContext);

@@ -1,5 +1,5 @@
 import { useNavigate } from '@tanstack/react-router';
-import { Wallet, PlusCircle } from 'lucide-react';
+import { Wallet, ShieldAlert } from 'lucide-react';
 import { ModeToggle } from '@/components/mode-toggle';
 
 export function Home() {
@@ -13,10 +13,10 @@ export function Home() {
       path: '/wallet-ui'
     },
     {
-      title: 'Counter Contract',
-      description: 'Interactive counter smart contract',
-      icon: <PlusCircle className="w-10 h-10 text-blue-600" />,
-      path: '/counter'
+      title: 'Incident Report',
+      description: 'Submit & verify anonymous incident reports on-chain',
+      icon: <ShieldAlert className="w-10 h-10 text-blue-600" />,
+      path: '/incident-report'
     },
   ];
 
@@ -25,7 +25,7 @@ export function Home() {
       <div className="max-w-4xl mx-auto">
         <div className="flex justify-between items-center mb-12">
           <div className="text-center md:text-left">
-            <h1 className="text-4xl font-bold text-foreground mb-2">Midnight Starter Template</h1>
+            <h1 className="text-4xl font-bold text-foreground mb-2"> Private Neighborhood Watch </h1>
             <p className="text-xl text-muted-foreground">Explore our implementations and features</p>
           </div>
           <ModeToggle />

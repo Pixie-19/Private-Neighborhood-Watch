@@ -2,6 +2,15 @@
   "name": "@eddalabs/counter-contract",
   "version": "0.1.0",
   "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
   "scripts": {
     "compile": "compact compile src/counter.compact src/managed/counter",
     "compile:voting": "compact compile src/voting.compact src/managed/voting",
